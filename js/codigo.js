@@ -4,13 +4,28 @@ function handleFileChange() {
     const fileInput = document.getElementById('fileInput');
     const encryptBtn = document.getElementById('encryptBtn');
     const decryptBtn = document.getElementById('decryptBtn');
+    const uploadedImage = document.getElementById('uploadedImage');
 
     if (fileInput.files.length > 0) {
         encryptBtn.disabled = false;
         decryptBtn.disabled = false;
+
+        // Cambiar la imagen cuando se carga un archivo
+        const file = fileInput.files[0];
+        if (file.type.includes('image')) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                uploadedImage.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        } else {
+            // Si no es una imagen, mantener la imagen predeterminada
+            uploadedImage.src = '../img/enviar.png';
+        }
     } else {
         encryptBtn.disabled = true;
         decryptBtn.disabled = true;
+        uploadedImage.src = '../img/agregar.png'; // Resetear la imagen predeterminada
     }
 }
 
@@ -95,3 +110,12 @@ function decryptFile() {
 function decryptText(encryptedText) {
     return CryptoJS.AES.decrypt(encryptedText, secretKey).toString(CryptoJS.enc.Utf8);
 }
+
+window.onload = function() {
+    const contenidoEncriptado = sessionStorage.getItem('encryptedText');
+    if (contenidoEncriptado) {
+        document.getElementById('output').value = contenidoEncriptado;
+    } else {
+        alert('No se encontró el archivo encriptado para mostrar.');
+    }
+};

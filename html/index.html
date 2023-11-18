@@ -9,9 +9,15 @@
 <body>
     <div class="container">
         <h1>Encriptador de archivos</h1>
+        
         <div class="form-container">
+            <div>
             <input type="file" id="fileInput" onchange="handleFileChange()" accept=".txt,.pdf,.docx,.jpg,.png,.gif,.mp4" />  
             <label for="fileInput" class="file-input-label">Seleccionar archivo</label>
+        </div>
+        <div class="img-container">
+        <img id="uploadedImage" src="../img/agregar.png" alt="Imagen cargada" width="80px">
+    </div>
             <div class="button-container">
                 <button id="encryptBtn" onclick="encryptFile()" disabled>Encriptar</button>
                 <button id="decryptBtn" onclick="decryptFile()" disabled>Desencriptar</button>
@@ -21,7 +27,8 @@
                 <p id="errorMessage" class="error-message">Hubo un error. Por favor, inténtalo de nuevo.</p>
             </div>
         </div>
-        <textarea id="output" cols="50" rows="10" readonly></textarea>
+        
+        
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>

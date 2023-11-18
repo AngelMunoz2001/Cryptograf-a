@@ -33,6 +33,19 @@ body {
     cursor: pointer;
     font-size: 16px;
   }
+  
+  .img-container {
+    border: 2px solid #e5e5e5;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 1px;
+    display: inline-block;
+    transition: border-color 0.3s ease;
+}
+
+.img-container:hover {
+    border-color: #a0a0a0;
+}
 
   #encryptBtn {
     background-color: #4CAF50;
