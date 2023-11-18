@@ -1,11 +1,13 @@
 const secretKey = 'contraseña123';
 
 function handleFileChange() {
+    // variables para guardar las etiquetas de html
     const fileInput = document.getElementById('fileInput');
     const encryptBtn = document.getElementById('encryptBtn');
     const decryptBtn = document.getElementById('decryptBtn');
     const uploadedImage = document.getElementById('uploadedImage');
 
+    // Hablitar los botones
     if (fileInput.files.length > 0) {
         encryptBtn.disabled = false;
         decryptBtn.disabled = false;
@@ -30,18 +32,19 @@ function handleFileChange() {
 
 function encryptFile() {
     const fileInput = document.getElementById('fileInput');
+    const output2 = document.getElementById('output2');
     const file = fileInput.files[0];
 
     if (file) {
         const reader = new FileReader();
-
+        
         reader.onload = function(event) {
             const originalText = event.target.result;
             const encryptedText = encryptText(originalText);
+            
 
             // Almacenar el texto encriptado en sessionStorage
-            sessionStorage.setItem('encryptedText', encryptedText);
-
+              sessionStorage.setItem('encryptedText', encryptedText);
             // Redirigir a descargar.html después de encriptar
             window.location.href = 'descargar.html';
         };
@@ -99,8 +102,8 @@ function decryptText(encryptedText) {
             return CryptoJS.AES.decrypt(encryptedText, secretKey).toString(CryptoJS.enc.Utf8);
         }
 
-function encryptText(text) {
-            return CryptoJS.AES.encrypt(text, secretKey).toString();
+function encryptText(originalText) {
+            return CryptoJS.AES.encrypt(originalText, secretKey).toString();
 }
 
 function descargarArchivo() {
