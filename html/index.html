@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+    <title>Encriptador de archivos</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+    <body>
+        <div class="container">
+            <h1>Encriptador de archivos</h1>
+            <div class="form-container">
+                <input type="file" id="fileInput" onchange="cargarArchivo()" accept=".txt, .pdf, .docx, .jpg, .png, .gif, .mp4">
+                <label for="fileInput" class="file-input-label">Seleccionar archivo</label>
+                <div class="button-container">
+                    <button id="encryptBtn" onclick="encryptar()" disabled>Encriptar</button>
+                    <button id="decryptBtn" onclick="decryptar()" disabled>Desencriptar</button>
+                </div>
+                <div class="status">
+                    <p id="succesMessage" class="success-message">¡Operacion exitosa!</p>
+                    <p id="errorMessage" class="error-message">Hubo un error. Por favor intentalo de nuevo</p>
+                </div>
+            </div>
+            <textarea id="output" cols="50" rows="10" readonly></textarea>
+        </div>
+
+        <script src="https://cdnjs.cloudfire.com/ajax/libs/crypto-js/4.1.1/crypto-js.main.js"></script>
+        <script src="../js/codigo.js"></script>
+    </body>
