@@ -19,7 +19,36 @@ body {
     max-width: 500px;
     width: 90%;
   }
-  
+
+  .button-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+  }
+
+  button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  #encryptBtn {
+    background-color: #4CAF50;
+    color: white;
+  }
+
+  #decryptBtn {
+    background-color: #f44336;
+    color: white;
+  }
+
+  button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
   h1 {
     margin-top: 0;
     font-size: 32px;

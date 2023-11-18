@@ -16,7 +16,6 @@ function handleFileChange() {
 
 function encryptFile() {
     const fileInput = document.getElementById('fileInput');
-    const outputTextArea = document.getElementById('output');
     const file = fileInput.files[0];
 
     if (file) {
@@ -24,24 +23,46 @@ function encryptFile() {
 
         reader.onload = function (event) {
             const originalText = event.target.result;
-            const encryptedText = CryptoJS.AES.encrypt(originalText, secretKey).toString();
 
-            const blob = new Blob([encryptedText], { type: 'application/octet-stream' }); // Tipo MIME adecuado
-            const downloadLink = document.createElement('a');
-            downloadLink.href = URL.createObjectURL(blob);
-            downloadLink.download = 'archivo_encriptado.txt'; // Extensión adecuada
+            // Proceso de encriptación
+            const encryptedText = encryptText(originalText);
 
-            document.body.appendChild(downloadLink);
-            downloadLink.click();
+            // Almacenar el texto encriptado en sessionStorage
+            storeEncryptedText(encryptedText);
 
-            document.body.removeChild(downloadLink);
-
-            outputTextArea.value = encryptedText;
+            // Redirigir a descargar.html después de encriptar
+            window.location.href = 'descargar.html';
         };
 
         reader.readAsText(file);
     } else {
         alert('Selecciona un archivo antes de encriptar');
+    }
+}
+
+function storeEncryptedText(encryptedText) {
+    sessionStorage.setItem('encryptedText', encryptedText);
+}
+
+function encryptText(text) {
+    return CryptoJS.AES.encrypt(text, secretKey).toString();
+}
+
+function descargarArchivo() {
+    const contenidoEncriptado = sessionStorage.getItem('encryptedText');
+
+    if (contenidoEncriptado) {
+        const blob = new Blob([contenidoEncriptado], { type: 'application/octet-stream' });
+        const downloadLink = document.createElement('a');
+        downloadLink.href = URL.createObjectURL(blob);
+        downloadLink.download = 'archivo_encriptado.txt';
+
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+
+        document.body.removeChild(downloadLink);
+    } else {
+        alert('No se encontró el archivo encriptado para descargar.');
     }
 }
 
@@ -55,10 +76,9 @@ function decryptFile() {
 
         reader.onload = function (event) {
             const encryptedText = event.target.result;
-            const secretKey = 'contraseña123';
 
             try {
-                const decryptedText = CryptoJS.AES.decrypt(encryptedText, secretKey).toString(CryptoJS.enc.Utf8);
+                const decryptedText = decryptText(encryptedText);
                 outputTextArea.value = decryptedText;
             } catch (error) {
                 alert('Error al desencriptar el archivo. Asegúrate de usar la clave correcta.');
@@ -70,4 +90,8 @@ function decryptFile() {
     } else {
         alert('Selecciona un archivo antes de desencriptar');
     }
+}
+
+function decryptText(encryptedText) {
+    return CryptoJS.AES.decrypt(encryptedText, secretKey).toString(CryptoJS.enc.Utf8);
 }
